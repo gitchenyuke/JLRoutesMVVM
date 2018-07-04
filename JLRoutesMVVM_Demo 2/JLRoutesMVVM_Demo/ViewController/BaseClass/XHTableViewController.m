@@ -18,8 +18,6 @@
 
 @implementation XHTableViewController
 
-@dynamic viewModel; //@dynamic A相当于告诉编译器：“参数A的getter和setter方法并不在此处，
-
 - (void)dealloc {
     // 用下划线而不是self.xxx来访问tableView，避免dealloc时self.view尚未被加载，此时调用self.tableView反而会触发loadView
     _tableView.delegate = nil;

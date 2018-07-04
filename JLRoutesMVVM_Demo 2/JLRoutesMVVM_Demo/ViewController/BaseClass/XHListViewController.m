@@ -19,14 +19,15 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 }
 
-- (void)xh_BindViewModel{
-    [super xh_BindViewModel];
-    self.viewModel = [[XHTableViewModel alloc] init];
-}
-
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath withObject:(NSString *)object{
     cell.textLabel.text = object;
 }
 
+- (XHTableViewModel *)viewModel{
+    if (!_viewModel) {
+        _viewModel = [[XHTableViewModel alloc] init];
+    }
+    return _viewModel;
+}
 
 @end

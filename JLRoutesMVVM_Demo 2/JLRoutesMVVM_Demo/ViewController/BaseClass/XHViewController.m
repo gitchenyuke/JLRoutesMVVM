@@ -9,11 +9,11 @@
 #import "XHViewController.h"
 
 @interface XHViewController ()
-@property(nonatomic,strong) XHViewModel * viewModel;
+@property (nonatomic, readwrite, strong) XHViewModel * viewModel;
 @end
 
 @implementation XHViewController
-@dynamic viewModel;
+//@dynamic viewModel;//@dynamic A相当于告诉编译器：“参数A的getter和setter方法并不在此处，
 
 /// 当XHViewController初始化后会调用
 + (instancetype)allocWithZone:(struct _NSZone *)zone{
@@ -40,10 +40,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = ColorS(COLOR_BOTTOM);
-    
     self.isShowEmpty = YES;
-    
+    self.view.backgroundColor = ColorS(COLOR_BOTTOM);
     self.edgesForExtendedLayout = UIRectEdgeNone;
     if (@available(iOS 11.0, *)) { // 适配ios11 
         [[UIScrollView appearance] setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
@@ -140,31 +138,35 @@
 }
 
 - (void)xh_BindViewModel{
-    @weakify(self)
-    [[self.viewModel.requestDataCommand.executionSignals.switchToLatest deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
-        @strongify(self)
-        [self configurationEmptyView];
-    }];
     
-    /// showHUD
-    [[self.viewModel.requestDataCommand.executing skip:1] subscribeNext:^(id x) {
-        @strongify(self)
-        if ([x isEqualToNumber:@(YES)]) {
-            [self showWaitingDialog:WAITING_DIALOG];
-        }else if (!self.viewModel.errorMessage) {
-            [self hideWaitingDialog];
-        }else{
-            [self hideWaitingDialog:self.viewModel.errorMessage];
-        }
-    }];
+    if (!XHObjectIsNil(self.viewModel)) {
+        @weakify(self)
+        [[self.viewModel.requestDataCommand.executionSignals.switchToLatest deliverOnMainThread] subscribeNext:^(id  _Nullable x) {
+            @strongify(self)
+            [self configurationEmptyView];
+        }];
+
+        /// showHUD
+        [[self.viewModel.requestDataCommand.executing skip:1] subscribeNext:^(id x) {
+            @strongify(self)
+            if ([x isEqualToNumber:@(YES)]) {
+                [self showWaitingDialog:WAITING_DIALOG];
+            }else if (!self.viewModel.errorMessage) {
+                [self hideWaitingDialog];
+            }else{
+                [self hideWaitingDialog:self.viewModel.errorMessage];
+            }
+        }];
+    }
 }
 
 /// 重新加载
 - (void)reload:(id)sender {
-    [self.viewModel.requestDataCommand execute:nil];
+    if (!XHObjectIsNil(self.viewModel)) {
+        [self.viewModel.requestDataCommand execute:nil];
+    }
 }
 
 - (void)xh_InitSubviews{}
-
 
 @end

@@ -20,11 +20,6 @@
 @property(nonatomic, assign) BOOL isShowEmpty;
 
 /**
- 配置空数据显示
- */
-- (void)configurationEmptyView;
-
-/**
  *  显示emptyView
  *  emptyView 的以下系列接口可以按需进行重写
  *
@@ -70,6 +65,11 @@
 - (void)hideEmptyView;
 
 /**
+ *  配置空数据显示
+ */
+- (void)configurationEmptyView;
+
+/**
  *  布局emptyView，如果emptyView没有被初始化或者没被添加到界面上，则直接忽略掉。
  *
  *  如果有特殊的情况，子类可以重写，实现自己的样式
@@ -78,6 +78,14 @@
  */
 - (BOOL)layoutEmptyView;
 
+/**
+ * addUI
+ */
 - (void)xh_InitSubviews;
+
+/**
+ * 绑定ViewModel
+ */
 - (void)xh_BindViewModel;
+
 @end
