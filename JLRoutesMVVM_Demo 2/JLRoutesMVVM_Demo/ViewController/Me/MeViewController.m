@@ -22,7 +22,7 @@
 
 - (void)xh_BindViewModel{
     [super xh_BindViewModel];
-    self.viewModel.dataSource = @[@"优化导航栏在转场时的样式",@"转场横屏"];
+    self.viewModel.dataSource = @[@"优化导航栏在转场时的样式",@"转场横屏",@"ReactiveCocoaDEMO",@"ZFPlayer"];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -43,6 +43,17 @@
             [self.navigationController pushViewController:viewController animated:YES];
         }
             break;
+        case 2:
+        {
+            NSString * router = [JLRoutes fk_generateURLWithPattern:XHNavPushRoute parameters:@[@"XHReactiveCocoaDEMOController"] extraParameters:nil];
+            XHOpenUrl(JLRGenRoute(XHDefaultRouteSchema, router));
+        }
+            break;
+        case 3:
+        {
+            NSString * router = [JLRoutes fk_generateURLWithPattern:XHNavPushRoute parameters:@[@"XHPlayerViewController"] extraParameters:nil];
+            XHOpenUrl(JLRGenRoute(XHDefaultRouteSchema, router));
+        }
         default:
             break;
     }

@@ -14,9 +14,6 @@
 - (void)layoutSubviews{
     [super layoutSubviews];
     
-//    self.verticalOffset = 0;
-//    self.imageViewInsets = UIEdgeInsetsMake(0, 0, 10, 0);
-    
     CGFloat actionButtonW = 150.f;
     CGFloat actionButtonH = 40.f;
     
