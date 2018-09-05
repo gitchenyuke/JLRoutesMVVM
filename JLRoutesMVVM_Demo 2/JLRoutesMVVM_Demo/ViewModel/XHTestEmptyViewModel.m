@@ -22,6 +22,7 @@
             MessgaeResult * res = [req result];
             if ([res isSuccess]) {
                 //self.dataSource = res.info;
+                self.errorMessage = REQUESTDEFAIL;
             }else{
                 self.errorMessage = REQUESTDEFAIL;
             }
